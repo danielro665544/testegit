@@ -1,0 +1,3 @@
+select g.name, m.title, a.first_name, a.last_name from movies as m
+INNER JOIN actors as a ON a.favorite_movie_id=m.id
+INNER JOIN genres as g ON g.id=m.genre_id;
