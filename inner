@@ -1,3 +1,33 @@
 select g.name, m.title, a.first_name, a.last_name from movies as m
 INNER JOIN actors as a ON a.favorite_movie_id=m.id
 INNER JOIN genres as g ON g.id=m.genre_id;
+
+aula 23
+
+use movies_db;
+select * from actors;
+select id, replace(first_name, 'Sam', 'XXXXXXXX') AS titulo_manipulado from actors where first_name = "Sam";
+select *, DATE_FORMAT(release_date, '%d/%m/%Y') AS Data_NOVA from movies;
+
+select id, title, rating, CASE
+WHEN rating < 4 THEN 'Ruim'
+WHEN rating < 6 THEN 'Regular'
+WHEN rating < 8 THEN 'Bom'
+WHEN rating < 9.5 THEN 'Muito Bom'
+ELSE 'Excelente'
+END as categoria
+from movies;
+
+select DISTINCT actors.first_name, actors.last_name FROM actors 
+INNER JOIN actor_movie ON actors.id = actor_movie.actor_id
+INNER JOIN movies ON movies.id = actor_movie.movie_id
+WHERE movies.title LIKE '%Harry Potter%';
+
+select count(movies.title), genres.name from movies, genres where movies.genre_id = genres.id group by genres.name; 
+select min(movies.rating), genres.name from movies, genres where movies.genre_id = genres.id group by genres.name; 
+select max(movies.rating), genres.name from movies, genres where movies.genre_id = genres.id group by genres.name; 
+select avg(movies.rating), genres.name from movies, genres where movies.genre_id = genres.id group by genres.name; 
+select count(seasons.title), series.title from seasons, series where seasons.serie_id = series.id group by series.title; 
+select count(episodes.title), series.title, seasons.title from episodes, series, seasons where seasons.serie_id = series.id and episodes.season_id = seasons.id group by series.title, seasons.title;
+select count(movies.title) from movies where movies.rating > 5;
+select actors.first_name, movies.title from actors, movies where actors.favorite_movie_id = movies.id and movies.title LIKE "%t%";
