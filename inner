@@ -31,3 +31,44 @@ select count(seasons.title), series.title from seasons, series where seasons.ser
 select count(episodes.title), series.title, seasons.title from episodes, series, seasons where seasons.serie_id = series.id and episodes.season_id = seasons.id group by series.title, seasons.title;
 select count(movies.title) from movies where movies.rating > 5;
 select actors.first_name, movies.title from actors, movies where actors.favorite_movie_id = movies.id and movies.title LIKE "%t%";
+
+select id, title, rating from movies where rating >(select avg(rating) from movies);
+select
+a.id, a.first_name, a.last_name,
+(select count(*) from actor_movie as am where am.actor_id = a.id)
+as tot_peliculas,
+(select count(*) from actor_episode as ae where ae.actor_id = a.id)
+as tot_episodios
+from actors as a;
+
+select a.first_name, a.last_name, m.length, m.title
+from actors as a, movies as m
+where exists (
+select m.id from movies as m
+where m.id = a.favorite_movie_id
+and length = 120
+);
+insert into movies (id) values(1000);
+select * from movies;
+delete from movies where id = 1000;
+select * from movies
+insert into movies(title, rating, awards, length) values("Back to the future 5", 2, 2, 200);
+insert into movies  values (null, 2000-10-10, 2000-10-10, "Back to the future", 3, 3, 2000-10-10, 200, 2);
+select * from movies;
+insert into movies  values (null, 2000-10-10, 2000-10-10, "Back to the future", 3, null, 2000-10-10, 200, 2);
+select * from movies;
+update movies set awards = null;
+SET SQL_SAFE_UPDATES = 1;
+select * from movies;
+update movies set awards = 2 where release_date = 2001;
+select * from movies;
+update movies set awards = 0 where awards = null;
+select * from movies;
+delete from movies order by id desc limit 1;
+select id from movies  order by id desc limit 1;
+select movies.id, actors.first_name, actors.favorite_movie_id from movies, actors where movies.id = actors.favorite_movie_id;
+delete from movies where id = 11;
+select * from movies where rating < 1;
+delete from movies where rating < 1;
+select movies.id, actors.first_name, actors.favorite_movie_id from movies, actors where movies.id = actors.favorite_movie_id;
+select movie.id where 
